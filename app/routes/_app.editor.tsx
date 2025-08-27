@@ -1,10 +1,16 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData, useFetcher, Form } from "@remix-run/react";
 import { useState } from "react";
+import { storage } from "~/models/db.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  // For now, return empty - will implement project fetching later
-  return json({ projects: [] });
+  try {
+    const projects = await storage.getAllProjects();
+    return json({ projects });
+  } catch (error) {
+    console.error("Failed to fetch projects:", error);
+    return json({ projects: [] });
+  }
 };
 
 export default function EditorLayout() {

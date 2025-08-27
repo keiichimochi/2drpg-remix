@@ -5,7 +5,7 @@ export default {
     modules: {
       url: true,
       path: true,
-      fs: false, // fsはブラウザでは使用しない
+      fs: true, // サーバーサイドでのfs使用を許可
     },
   },
   future: {
@@ -14,5 +14,13 @@ export default {
     v3_relativeSplatPath: true,
     v3_singleFetch: true,
     v3_throwAbortReason: true,
+  },
+  // Prismaとの互換性のためにサーバーサイドのモジュールを許可
+  serverNodeBuiltinsPolyfill: {
+    modules: {
+      fs: true,
+      path: true,
+      url: true,
+    },
   },
 };
